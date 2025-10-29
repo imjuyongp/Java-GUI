@@ -8,11 +8,9 @@ import java.awt.event.MouseMotionListener;
 
 public class Scribble extends JFrame {
   public Scribble() {
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    add(new JPanel());
     setSize(800, 600);
-    MyPanel panel = new MyPanel();
-    this.add(panel);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    add(new MyPanel());
     setVisible(true);
   }
 
