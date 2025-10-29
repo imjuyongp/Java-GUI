@@ -17,7 +17,7 @@ public class BasicPaint extends JFrame {
 
   }
 
-  class MyPanel extends JPanel { // 내부 클래스 정의
+  public class MyPanel extends JPanel { // 내부 클래스 정의
 
     private int squareX = 100;
     private int squareY = 100;
@@ -33,16 +33,12 @@ public class BasicPaint extends JFrame {
         }
       });
 
-      addMouseListener(new MouseAdapter() {
-        public void mouseDragged(MouseEvent e) {
-          moveSquare(e.getX(), e.getY());
-        }
-      });
     }
 
     private void moveSquare(int x, int y) {
       int OFFSET = 10;
       if((squareX != x) || (squareY != y)) {
+        // 본래의 위치(여기서 repaint()가 paintComponent()를 호출하여 이전 위치를 지움)
         repaint(squareX, squareY, squareW +  OFFSET, squareH + OFFSET);
 
         squareX = x;
