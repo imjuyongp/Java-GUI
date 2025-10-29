@@ -25,17 +25,23 @@ public class BasicPaint extends JFrame {
     private int squareH = 20;
 
     public MyPanel() {
-      setBorder(BorderFactory.createLineBorder(Color.BLACK));
+     // setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-      addMouseListener(new MouseAdapter() { // JPanel에 마우스 이벤트 리스너 등록
+      this.addMouseListener(new MouseAdapter() { // JPanel에 마우스 이벤트 리스너 등록
         public void mousePressed(MouseEvent e) {
-          moveSquare(e.getX(), e.getY());
+          int OFFSET = 10;
+          if(squareX != e.getX() || squareY != e.getY()) {
+            repaint(squareX, squareY, squareW + OFFSET, squareH + OFFSET);
+            squareX = e.getX();
+            squareY = e.getY();
+            repaint(squareX, squareY, squareW + OFFSET, squareH + OFFSET);
+          }
         }
       });
 
     }
 
-    private void moveSquare(int x, int y) {
+    /*private void moveSquare(int x, int y) {
       int OFFSET = 10;
       if((squareX != x) || (squareY != y)) {
         // 본래의 위치(여기서 repaint()가 paintComponent()를 호출하여 이전 위치를 지움)
@@ -46,7 +52,7 @@ public class BasicPaint extends JFrame {
 
         repaint(squareX, squareY, squareW + OFFSET, squareH + OFFSET);
       }
-    }
+    }*/
 
     protected void paintComponent(Graphics g) {
 
