@@ -35,6 +35,7 @@ public class KeyEventTest extends JFrame implements KeyListener {
     new KeyEventTest();
   }
 
+  // keyListener 인테페이스 구현(전부 해야함)
   public void keyTyped(KeyEvent e) {
     display(e, "Key Typed        ");
   }
