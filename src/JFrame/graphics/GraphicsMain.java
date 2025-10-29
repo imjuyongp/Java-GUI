@@ -5,6 +5,7 @@ public class GraphicsMain {
     // BasicPaint basicPaint = new BasicPaint();
     // MyFrame myFrame = new MyFrame();
     // DropBall dropBall = new DropBall();
-    MouseEventTest mouseEventTest = new MouseEventTest();
+    // MouseEventTest mouseEventTest = new MouseEventTest();
+    Scribble scribble = new Scribble();
   }
 }
