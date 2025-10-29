@@ -23,14 +23,12 @@ public class Scribble extends JFrame {
       this.addMouseMotionListener(new MouseAdapter() {
         @Override
         public void mouseDragged(MouseEvent e) {
-          int x = e.getX();
-          int y = e.getY();
           if (index > 1000) {
             return;
           }
           array[index] = new Point();
-          array[index].x = x;
-          array[index].y = y;
+          array[index].x = e.getX();
+          array[index].y = e.getY();
           index++;
           repaint();
         }
