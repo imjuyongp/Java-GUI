@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class Player implements ActionListener {
+public class Player {
 
     BufferedImage img;
     private int x = 250;
@@ -27,7 +27,7 @@ public class Player implements ActionListener {
     }
 
 
-    // 플레이어를 이동시키는 메서드
+    // 플레이어를 이동시키는 메서드 (좌표 업데이트)
     public void moveLeft() {
         if (x > 0) {  // 왼쪽 경계 체크
             x -= 10;
@@ -50,10 +50,5 @@ public class Player implements ActionListener {
         if (y < 470) {  // 아래쪽 경계 체크
             y += 10;
         }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
