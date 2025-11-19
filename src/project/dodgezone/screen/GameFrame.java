@@ -1,6 +1,4 @@
 package project.dodgezone.screen;
-
-import JFrame.graphics.DropBall;
 import project.dodgezone.game.Player;
 
 import javax.swing.*;
@@ -26,7 +24,7 @@ public class GameFrame extends JFrame {
             setLayout(null);
 
             setFocusable(true);
-            requestFocusInWindow();
+            requestFocusInWindow(); // 패널 자체에 포커스를 주어 키보드를 입력 받음
 
             // 키 이벤트 정의 (플레이어 이동)
             addKeyListener(new KeyAdapter() {
