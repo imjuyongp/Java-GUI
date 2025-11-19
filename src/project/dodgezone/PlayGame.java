@@ -1,4 +1,4 @@
-package project;
+package project.dodgezone;
 
 import project.dodgezone.screen.GameFrame;
 
