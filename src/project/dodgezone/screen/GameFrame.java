@@ -75,7 +75,7 @@ public class GameFrame extends JFrame {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            player.paintImg(g); // 플레이어를 그림
+            player.paintPlayer(g); // 플레이어를 그림
 
             // 위쪽에 모든 장애물을 그림
             for (ObstacleUp obstacle : obstacleUpList) {

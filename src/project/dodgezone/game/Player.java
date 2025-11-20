@@ -20,7 +20,7 @@ public class Player {
     }
 
     // 플레이어의 그림을 그려주는 메서드
-    public void paintImg(Graphics g) {
+    public void paintPlayer(Graphics g) {
         g.drawImage(img, x, y,30,30, null); // 이미지를 x,y 좌표에 그리고 이미지 크기를 조정함
     }
 
