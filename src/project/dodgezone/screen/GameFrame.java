@@ -93,7 +93,7 @@ public class GameFrame extends JFrame {
                 }
             } else if (e.getSource() == moveObstacleTimer) {
                 // 모든 장애물 이동 및 화면 밖으로 나간 장애물 제거 (다형성 활용)
-                Iterator<Obstacle> iterator = obstacles.iterator();
+                Iterator<Obstacle> iterator = obstacles.iterator(); // 장애물이 담겨있는 배열리스트를 iterator 타입의 리스트에 넣음
                 while (iterator.hasNext()) {
                     Obstacle obstacle = iterator.next();
                     obstacle.move();
