@@ -25,17 +25,8 @@ public class GameFrame extends JFrame {
         // 플레이어 객체 생성
         Player player = new Player();
 
-        // 위쪽 장애물 리스트
-        ArrayList<ObstacleUp> obstacleUpList = new ArrayList<>();
-
-        // 아래쪽 장애물 리스트
-        ArrayList<ObstacleDown> obstacleDownList = new ArrayList<>();
-
-        // 왼쪽 장애물 리스트
-        ArrayList<ObstacleLeft> obstacleLeftList = new ArrayList<>();
-
-        // 오른쪽 장애물 리스트
-        ArrayList<ObstacleRight> obstacleRightList = new ArrayList<>();
+        // 모든 방향의 장애물을 하나의 리스트로 관리
+        ArrayList<Obstacle> obstacles = new ArrayList<>();
 
         // 장애물 생성 타이머
         Timer createObstacleTimer;
@@ -77,17 +68,8 @@ public class GameFrame extends JFrame {
             super.paintComponent(g);
             player.paintPlayer(g); // 플레이어를 그림
 
-            // 위쪽에 모든 장애물을 그림
-            for (ObstacleUp obstacle : obstacleUpList) {
-                obstacle.paintObstacle(g);
-            }
-            // 아래쪽에 모든 장애물을 그림
-            for (ObstacleDown obstacle : obstacleDownList) {
-                obstacle.paintObstacle(g);
-            }
-
-            // 왼쪽에 모든 장애물을 그림
-            for (ObstacleLeft obstacle : obstacleLeftList) {
+            // 모든 장애물을 그림
+            for (Obstacle obstacle : obstacles) {
                 obstacle.paintObstacle(g);
             }
         }
@@ -99,55 +81,28 @@ public class GameFrame extends JFrame {
                 if (Math.random() < 0.5) {
                     int createNum = (int) (Math.random() * 5) + 1; // 1~5개 생성
                     for (int i = 0; i < createNum; i++) {
-                        obstacleUpList.add(new ObstacleUp());
-                        obstacleDownList.add(new ObstacleDown());
-                        obstacleLeftList.add(new ObstacleLeft());
-                        obstacleRightList.add(new ObstacleRight());
+                        // 랜덤하게 4방향 중 하나 선택
+                        int direction = (int) (Math.random() * 4);
+                        switch (direction) {
+                            case 0 -> obstacles.add(new ObstacleUp());
+                            case 1 -> obstacles.add(new ObstacleDown());
+                            case 2 -> obstacles.add(new ObstacleLeft());
+                            case 3 -> obstacles.add(new ObstacleRight());
+                        }
                     }
                 }
             } else if (e.getSource() == moveObstacleTimer) {
-                // 위쪽 장애물 이동
-                Iterator<ObstacleUp> iteratorUp = obstacleUpList.iterator();
-                while (iteratorUp.hasNext()) {
-                    ObstacleUp obstacle = iteratorUp.next();
+                // 모든 장애물 이동 및 화면 밖으로 나간 장애물 제거 (다형성 활용)
+                Iterator<Obstacle> iterator = obstacles.iterator();
+                while (iterator.hasNext()) {
+                    Obstacle obstacle = iterator.next();
                     obstacle.move();
 
                     // 화면 밖으로 나간 장애물 제거
                     if (obstacle.isOutOfScreen()) {
-                        iteratorUp.remove();
+                        iterator.remove();
                     }
                 }
-
-                // 아래쪽 장애물 이동
-                Iterator<ObstacleDown> iteratorDown = obstacleDownList.iterator();
-                while (iteratorDown.hasNext()) {
-                    ObstacleDown obstacle = iteratorDown.next();
-                    obstacle.move();
-                    if (obstacle.isOutOfScreen()) {
-                        iteratorDown.remove();
-                    }
-                }
-
-                // 왼쪽 장애물 이동
-                Iterator<ObstacleLeft> iteratorLeft = obstacleLeftList.iterator();
-                while (iteratorLeft.hasNext()) {
-                    ObstacleLeft obstacle = iteratorLeft.next();
-                    obstacle.move();
-                    if (obstacle.isOutOfScreen()) {
-                        iteratorLeft.remove();
-                    }
-                }
-
-                // 오른쪽 장애물 이동
-                Iterator<ObstacleRight> iteratorRight = obstacleRightList.iterator();
-                while (iteratorRight.hasNext()) {
-                    ObstacleRight obstacle = iteratorRight.next();
-                    obstacle.move();
-                    if (obstacle.isOutOfScreen()) {
-                        iteratorRight.remove();
-                    }
-                }
-
             }
             repaint();
         }
