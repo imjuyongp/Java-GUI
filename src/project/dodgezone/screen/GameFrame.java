@@ -109,16 +109,22 @@ public class GameFrame extends JFrame {
             repaint();
         }
 
-        public void collision() { // 충돌 감지 메서드
-            Rectangle playerBox = player.getBounds();
+        private void collision() { // 충돌 감지 메서드
+            Rectangle playerBounds = player.getBounds();
 
             for  (Obstacle obstacle : obstacles) {
-                if (playerBox.intersects(obstacle.getBounds())) { // 충돌 감지로 intersects() 사용 : 두 사각형이 겹치면 true반환
-                    // gameOver(); // 게임 종료 호출
-                    System.out.println("충돌!");
+                if (playerBounds.intersects(obstacle.getBounds())) { // 충돌 감지로 intersects() 사용 : 두 사각형이 겹치면 true반환
+                    gameOver(); // 게임 종료 호출
+                    // System.out.println("충돌!");
                     return;
                 }
             }
+        }
+
+        public void gameOver() {
+            // 타이머 객체 종료
+            moveObstacleTimer.stop();
+            createObstacleTimer.stop();
         }
     }
 }

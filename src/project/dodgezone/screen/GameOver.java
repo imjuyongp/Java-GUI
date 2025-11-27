@@ -1,4 +1,9 @@
 package project.dodgezone.screen;
 
-public class GameOver {
+import javax.swing.*;
+
+public class GameOver extends JPanel {
+    public GameOver() {
+        setSize(200,200);
+    }
 }
