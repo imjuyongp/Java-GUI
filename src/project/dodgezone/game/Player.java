@@ -49,4 +49,8 @@ public class Player {
             y += 10;
         }
     }
+
+    public Rectangle getBounds() { // 플레이어 객체를 감싸는 사각형
+        return new Rectangle(x,y,30,30); // 플레이어 객체 크기 만큼 사각형 크기 조정
+    }
 }

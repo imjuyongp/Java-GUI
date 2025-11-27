@@ -10,9 +10,14 @@ public abstract class Obstacle {
     // 장애물을 그리는 메서드
     public abstract void paintObstacle(Graphics g);
 
-    // 장애물을 아래로 이동시키는 메서드
+    // 장애물을 이동시키는 메서드
     public abstract void move();
 
     // 화면 밖으로 나갔는지 확인
     public abstract boolean isOutOfScreen();
+
+    // 장애물 객체를 감싸는 사각형]
+    public Rectangle getBounds() {
+        return new Rectangle(x,y,10,10); // 장애물 크기에 맞게 사각형 크기 조정
+    }
 }
