@@ -102,9 +102,23 @@ public class GameFrame extends JFrame {
                     if (obstacle.isOutOfScreen()) {
                         iterator.remove();
                     }
+
+                    collision(); // 충돌 감지
                 }
             }
             repaint();
+        }
+
+        public void collision() { // 충돌 감지 메서드
+            Rectangle playerBox = player.getBounds();
+
+            for  (Obstacle obstacle : obstacles) {
+                if (playerBox.intersects(obstacle.getBounds())) { // 충돌 감지로 intersects() 사용 : 두 사각형이 겹치면 true반환
+                    // gameOver(); // 게임 종료 호출
+                    System.out.println("충돌!");
+                    return;
+                }
+            }
         }
     }
 }
