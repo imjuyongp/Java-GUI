@@ -18,6 +18,6 @@ public abstract class Obstacle {
 
     // 장애물 객체를 감싸는 사각형
     public Rectangle getBounds() {
-        return new Rectangle(x,y,10,10); // 장애물 크기에 맞게 사각형 크기 조정
+        return new Rectangle(x, y, 10, 10); // 장애물 크기에 맞게 사각형 크기 조정
     }
 }

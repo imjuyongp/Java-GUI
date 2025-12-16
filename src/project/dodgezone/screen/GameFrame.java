@@ -33,6 +33,9 @@ public class GameFrame extends JFrame {
         // 장애물 이동 타이머
         Timer moveObstacleTimer;
 
+        // 게임 오버 패널
+        GameOver gameOverPanel;
+
         public GamePanel() {
             setBackground(Color.BLACK);
             setLayout(null);
@@ -93,7 +96,7 @@ public class GameFrame extends JFrame {
                 }
             } else if (e.getSource() == moveObstacleTimer) {
                 // 모든 장애물 이동 및 화면 밖으로 나간 장애물 제거 (다형성 활용)
-                Iterator<Obstacle> iterator = obstacles.iterator(); // 장애물이 담겨있는 배열리스트를 iterator 타입의 리스트에 넣음
+                Iterator<Obstacle> iterator = obstacles.iterator(); // 장애물이 담겨있는 배열리스트를 순회
                 while (iterator.hasNext()) {
                     Obstacle obstacle = iterator.next();
                     obstacle.move();
@@ -115,7 +118,7 @@ public class GameFrame extends JFrame {
             for  (Obstacle obstacle : obstacles) {
                 if (playerBounds.intersects(obstacle.getBounds())) { // 충돌 감지로 intersects() 사용 : 두 사각형이 겹치면 true반환
                     gameOver(); // 게임 종료 호출
-                    // System.out.println("충돌!");
+                    System.out.println("충돌!");
                     return;
                 }
             }
@@ -125,6 +128,43 @@ public class GameFrame extends JFrame {
             // 타이머 객체 종료
             moveObstacleTimer.stop();
             createObstacleTimer.stop();
+
+            // 게임 오버 패널 생성 및 표시
+            gameOverPanel = new GameOver();
+            gameOverPanel.setBounds(0, 0, getWidth(), getHeight());
+
+            // 재시작 버튼 이벤트
+            gameOverPanel.getRestartButton().addActionListener(e -> restartGame());
+
+            // 게임 종료 버튼 이벤트
+            gameOverPanel.getExitButton().addActionListener(e -> System.exit(0));
+
+            add(gameOverPanel);
+            gameOverPanel.setVisible(true);
+            revalidate();
+            repaint();
+        }
+
+        public void restartGame() {
+            // 게임 오버 패널 제거
+            if (gameOverPanel != null) {
+                remove(gameOverPanel);
+                gameOverPanel = null;
+            }
+
+            // 플레이어 위치 초기화
+            player = new Player();
+
+            // 장애물 초기화
+            obstacles.clear();
+
+            // 타이머 재시작
+            createObstacleTimer.start();
+            moveObstacleTimer.start();
+
+            // 포커스 재설정
+            requestFocusInWindow();
+            repaint();
         }
     }
 }
