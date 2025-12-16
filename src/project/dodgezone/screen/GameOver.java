@@ -33,7 +33,6 @@ public class GameOver extends JPanel {
         restartButton.setPreferredSize(new Dimension(120, 40));
         restartButton.setFocusPainted(false);
         restartButton.setBackground(new Color(70, 130, 180)); // 기본 색상
-        restartButton.setForeground(Color.WHITE);
 
         // 종료 버튼
         exitButton = new JButton("게임 종료");
@@ -41,7 +40,6 @@ public class GameOver extends JPanel {
         exitButton.setPreferredSize(new Dimension(120, 40));
         exitButton.setFocusPainted(false);
         exitButton.setBackground(new Color(220, 20, 60)); // 기본 색상
-        exitButton.setForeground(Color.WHITE);
 
         buttonPanel.add(restartButton);
         buttonPanel.add(exitButton);

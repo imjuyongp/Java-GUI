@@ -32,6 +32,12 @@ public class GameFrame extends JFrame {
         Timer createObstacleTimer;
         // 장애물 이동 타이머
         Timer moveObstacleTimer;
+        // 장애물 생성 난이도 증가 타이머
+        Timer moreCreateObstacleTimer;
+        // 장애물 이동 난이도 증가 타이머
+        Timer moreMoveObstacleTimer;
+        // 난이도 증가 트리거 타이머
+        Timer levelUpTimer;
 
         // 게임 오버 패널
         GameOver gameOverPanel;
@@ -64,6 +70,23 @@ public class GameFrame extends JFrame {
             // 장애물 이동 타이머 객체
             moveObstacleTimer = new Timer(50, this);
             moveObstacleTimer.start();
+
+            // 장애물 생성 난이도 증가 타이머 객체 (더 빠른 생성 속도)
+            moreCreateObstacleTimer = new Timer(500, this);
+
+            // 장애물 이동 난이도 증가 타이머 객체 (더 빠른 이동 속도)
+            moreMoveObstacleTimer = new Timer(30, this);
+
+            // 10초 후 난이도 증가 (일회성 타이머)
+            levelUpTimer = new Timer(10000, e -> {
+                createObstacleTimer.stop(); // 기존 장애물 생성 타이머 정지
+                moreCreateObstacleTimer.start(); // 빠른 장애물 생성 타이머 시작
+                moveObstacleTimer.stop(); // 기존 장애물 이동 타이머 정지
+                moreMoveObstacleTimer.start(); // 빠른 장애물 이동 타이머 시작
+                System.out.println("난이도 증가");
+            });
+            levelUpTimer.setRepeats(false); // 한 번만 실행
+            levelUpTimer.start();
         }
 
         @Override
@@ -79,7 +102,7 @@ public class GameFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == createObstacleTimer) {
+            if (e.getSource() == createObstacleTimer || e.getSource() == moreCreateObstacleTimer) {
                 // 장애물 생성 (50% 확률)
                 if (Math.random() < 0.5) {
                     int createNum = (int) (Math.random() * 5) + 1; // 1~5개 생성
@@ -94,7 +117,7 @@ public class GameFrame extends JFrame {
                         }
                     }
                 }
-            } else if (e.getSource() == moveObstacleTimer) {
+            } else if (e.getSource() == moveObstacleTimer ||  e.getSource() == moreMoveObstacleTimer) {
                 // 모든 장애물 이동 및 화면 밖으로 나간 장애물 제거 (다형성 활용)
                 Iterator<Obstacle> iterator = obstacles.iterator(); // 장애물이 담겨있는 배열리스트를 순회
                 while (iterator.hasNext()) {
@@ -128,6 +151,9 @@ public class GameFrame extends JFrame {
             // 타이머 객체 종료
             moveObstacleTimer.stop();
             createObstacleTimer.stop();
+            moreCreateObstacleTimer.stop();
+            moreMoveObstacleTimer.stop();
+            levelUpTimer.stop();
 
             // 게임 오버 패널 생성 및 표시
             gameOverPanel = new GameOver();
@@ -158,9 +184,16 @@ public class GameFrame extends JFrame {
             // 장애물 초기화
             obstacles.clear();
 
+            // 난이도 초기화 (일반 타이머로 복귀)
+            moreCreateObstacleTimer.stop();
+            moreMoveObstacleTimer.stop();
+
             // 타이머 재시작
             createObstacleTimer.start();
             moveObstacleTimer.start();
+
+            // 10초 후 난이도 증가 타이머 재시작
+            levelUpTimer.restart();
 
             // 포커스 재설정
             requestFocusInWindow();
