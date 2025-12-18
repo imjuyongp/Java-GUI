@@ -17,7 +17,7 @@ public class GameOver extends JPanel {
         centerPanel.setOpaque(false);
 
         // 게임 오버 메시지
-        JLabel gameOverLabel = new JLabel("게임 종료!");
+        JLabel gameOverLabel = new JLabel("게임 종료");
         gameOverLabel.setFont(new Font("맑은 고딕", Font.BOLD, 40));
         gameOverLabel.setForeground(Color.WHITE);
         gameOverLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

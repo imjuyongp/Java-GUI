@@ -77,7 +77,7 @@ public class GameFrame extends JFrame {
             // 장애물 이동 난이도 증가 타이머 객체 (더 빠른 이동 속도)
             moreMoveObstacleTimer = new Timer(30, this);
 
-            // 10초 후 난이도 증가 (일회성 타이머)
+            // 난이도 증가 (일회성 타이머)
             levelUpTimer = new Timer(10000, e -> {
                 createObstacleTimer.stop(); // 기존 장애물 생성 타이머 정지
                 moreCreateObstacleTimer.start(); // 빠른 장애물 생성 타이머 시작
@@ -86,6 +86,7 @@ public class GameFrame extends JFrame {
                 System.out.println("난이도 증가");
             });
             levelUpTimer.setRepeats(false); // 한 번만 실행
+
             levelUpTimer.start();
         }
 
@@ -118,7 +119,6 @@ public class GameFrame extends JFrame {
                     }
                 }
             } else if (e.getSource() == moveObstacleTimer ||  e.getSource() == moreMoveObstacleTimer) {
-                // 모든 장애물 이동 및 화면 밖으로 나간 장애물 제거 (다형성 활용)
                 Iterator<Obstacle> iterator = obstacles.iterator(); // 장애물이 담겨있는 배열리스트를 순회
                 while (iterator.hasNext()) {
                     Obstacle obstacle = iterator.next();
@@ -135,13 +135,13 @@ public class GameFrame extends JFrame {
             repaint();
         }
 
-        private void collision() { // 충돌 감지 메서드
+        private void collision() { // 충돌 감지
             Rectangle playerBounds = player.getBounds();
 
             for  (Obstacle obstacle : obstacles) {
                 if (playerBounds.intersects(obstacle.getBounds())) { // 충돌 감지로 intersects() 사용 : 두 사각형이 겹치면 true반환
                     gameOver(); // 게임 종료 호출
-                    System.out.println("충돌!");
+                    System.out.println("충돌");
                     return;
                 }
             }
@@ -193,7 +193,7 @@ public class GameFrame extends JFrame {
             moveObstacleTimer.start();
 
             // 10초 후 난이도 증가 타이머 재시작
-            levelUpTimer.restart();
+            levelUpTimer.start();
 
             // 포커스 재설정
             requestFocusInWindow();
